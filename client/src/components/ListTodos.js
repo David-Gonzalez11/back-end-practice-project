@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react"
+import EditTodo from "./EditTodo"
 
 const ListTodos = () => {
   const [list, setList] = useState([])
@@ -13,12 +14,15 @@ const ListTodos = () => {
     }
   }
 
-  const handleDelete = async() =>  {
-try{
-const toDelete = await (fetch("http://localhost:5001/todos/:id"))
-} catch(error){
-  console.error(error)
-}
+  const handleDelete = async (id) => {
+    try {
+      const toDelete = await fetch(`http://localhost:5001/todos/${id}`, {
+        method: "DELETE",
+      })
+      setList(list.filter((listItem) => listItem.todo_id !== id))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -31,12 +35,12 @@ const toDelete = await (fetch("http://localhost:5001/todos/:id"))
           return (
             <div className="d-flex" key={todo.todo_id}>
               <li>{todo.description}</li>
-              <span>
-                <button>Edit</button>
-              </span>
+                <EditTodo todo={todo} />
 
               <span>
-                <button delete={handleDelete()}>Delete</button>
+                <button onClick={() => handleDelete(todo.todo_id)}>
+                  Delete
+                </button>
               </span>
             </div>
           )
