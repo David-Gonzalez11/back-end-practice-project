@@ -1,27 +1,33 @@
-import React, { Fragment , useState} from "react"
+import React, { Fragment, useState } from "react"
 import ListTodos from "./ListTodos"
 import EditTodo from "./EditTodo"
 const InputTodo = () => {
   const [description, setDescription] = useState("")
   const onSubmitForm = async (e) => {
-    try{
-e.preventDefault()
-const body = {description}
-const response =  await fetch("http://localhost:5001/todos", {
-  method: "POST",
-  headers: {"content-Type": "application/json"}, body: JSON.stringify(body)
-})
-window.location = "/"
-console.log(response)
-    } catch(error){
+    try {
+      e.preventDefault()
+      const body = { description }
+      const response = await fetch("http://localhost:5001/todos", {
+        method: "POST",
+        headers: { "content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+      window.location = "/"
+      console.log(response)
+    } catch (error) {
       console.error(Error)
     }
   }
   return (
     <Fragment>
-      <h1 className="text-center mt-5">Pern todo</h1>
+      <h1 className="text-center mt-5">PERN todo</h1>
       <form className="d-flex mt-5" onSubmit={onSubmitForm}>
-        <input type="text" className="form-control" value={description} onChange={e => setDescription(e.target.value)}/>
+        <input
+          type="text"
+          className="form-control"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
         <button className="btn btn-success">Add</button>
       </form>
     </Fragment>

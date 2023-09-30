@@ -30,22 +30,34 @@ const ListTodos = () => {
   }, [])
   return (
     <Fragment>
-      <div>
-        {list.map((todo) => {
-          return (
-            <div className="d-flex" key={todo.todo_id}>
-              <li>{todo.description}</li>
+      {" "}
+      <table class="table mt-5 text-center">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map(todo => (
+            <tr key={todo.todo_id}>
+              <td>{todo.description}</td>
+              <td>
                 <EditTodo todo={todo} />
-
-              <span>
-                <button onClick={() => handleDelete(todo.todo_id)}>
+              </td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(todo.todo_id)}
+                >
                   Delete
                 </button>
-              </span>
-            </div>
-          )
-        })}
-      </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Fragment>
   )
 }
